@@ -3,11 +3,12 @@ package com.bimabagaskhoro.bvktestapp.domain.model
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class ItemDetailMeals(
     @field:SerializedName("strImageSource")
-    val strImageSource: Any,
+    val strImageSource: @RawValue Any,
 
     @field:SerializedName("strIngredient10")
     val strIngredient10: String,
@@ -43,7 +44,7 @@ data class ItemDetailMeals(
     val strArea: String,
 
     @field:SerializedName("strCreativeCommonsConfirmed")
-    val strCreativeCommonsConfirmed: Any,
+    val strCreativeCommonsConfirmed: @RawValue Any,
 
     @field:SerializedName("strIngredient19")
     val strIngredient19: String,
@@ -112,10 +113,10 @@ data class ItemDetailMeals(
     val strMeasure11: String,
 
     @field:SerializedName("dateModified")
-    val dateModified: Any,
+    val dateModified: @RawValue Any,
 
     @field:SerializedName("strDrinkAlternate")
-    val strDrinkAlternate: Any,
+    val strDrinkAlternate: @RawValue Any,
 
     @field:SerializedName("strSource")
     val strSource: String,

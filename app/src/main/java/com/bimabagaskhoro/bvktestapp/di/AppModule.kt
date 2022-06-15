@@ -1,5 +1,6 @@
 package com.bimabagaskhoro.bvktestapp.di
 
+import com.bimabagaskhoro.bvktestapp.domain.usecase.ItemMealsInteractor
 import com.bimabagaskhoro.bvktestapp.domain.usecase.ItemMealsUseCase
 import dagger.Binds
 import dagger.Module
@@ -12,5 +13,5 @@ import dagger.hilt.android.scopes.ViewModelScoped
 abstract class AppModule {
     @Binds
     @ViewModelScoped
-    abstract fun provideItemMealsUseCase(itemMealsUseCase: ItemMealsUseCase): ItemMealsUseCase
+    abstract fun provideItemMealsUseCase(itemMealsInteractor: ItemMealsInteractor): ItemMealsUseCase
 }

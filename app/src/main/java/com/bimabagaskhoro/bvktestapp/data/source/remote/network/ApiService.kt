@@ -11,7 +11,7 @@ interface ApiService {
     @GET("categories.php")
     suspend fun getMealsCategory(): ResponseCategoryMeals
 
-    @GET("filter.php")
+    @GET("filter.php?")
     suspend fun getFilterByCategory(
         @Query("c") category: String,
     ): ResponseMeals

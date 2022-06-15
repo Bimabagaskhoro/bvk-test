@@ -26,7 +26,7 @@ class NetworkModule {
     @Provides
     fun provideApiService(client: OkHttpClient): ApiService {
         val retrofit = Retrofit.Builder()
-            .baseUrl("www.themealdb.com/api/json/v1/1/") //
+            .baseUrl("https://www.themealdb.com/api/json/v1/1/") //
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
