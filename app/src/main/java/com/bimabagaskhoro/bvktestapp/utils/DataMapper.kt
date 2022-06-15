@@ -7,6 +7,8 @@ import com.bimabagaskhoro.bvktestapp.domain.model.ItemCategoryMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemDetailMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemMeals
 import com.google.gson.annotations.SerializedName
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 object DataMapper {
     fun entitiesToDomainCategory(data: List<CategoriesItem>): List<ItemCategoryMeals> =
@@ -94,8 +96,8 @@ object DataMapper {
             )
         }
 
-    fun entityToDomainDetailItems(data: ItemDetailMeals): MealsDetailItem =
-        MealsDetailItem(
+    fun entityToDomainDetailItems(data: MealsDetailItem): ItemDetailMeals =
+        ItemDetailMeals(
             strImageSource = data.strImageSource,
             strIngredient10 = data.strIngredient10,
             strIngredient12 = data.strIngredient12,

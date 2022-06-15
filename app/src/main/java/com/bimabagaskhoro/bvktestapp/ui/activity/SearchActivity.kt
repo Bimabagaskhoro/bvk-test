@@ -1,5 +1,6 @@
 package com.bimabagaskhoro.bvktestapp.ui.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,13 @@ class SearchActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         adapter = MealsAdapter()
+        adapter.onItemClick = { meals ->
+            Intent(this, DetailActivity::class.java).also {
+                it.putExtra(DetailActivity.EXTRA_DATA_ID, meals)
+                startActivity(it)
+            }
+        }
+
         binding.apply {
             edtSearch.setOnKeyListener { _, keyCode, event ->
                 if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {

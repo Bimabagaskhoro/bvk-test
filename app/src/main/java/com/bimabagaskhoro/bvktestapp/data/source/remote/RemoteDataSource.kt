@@ -6,6 +6,7 @@ import com.bimabagaskhoro.bvktestapp.data.source.remote.network.ApiService
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.CategoriesItem
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsDetailItem
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsItem
+import com.bimabagaskhoro.bvktestapp.domain.model.ItemDetailMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemMeals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

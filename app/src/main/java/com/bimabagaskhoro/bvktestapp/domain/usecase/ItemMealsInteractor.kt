@@ -1,6 +1,7 @@
 package com.bimabagaskhoro.bvktestapp.domain.usecase
 
 import com.bimabagaskhoro.bvktestapp.data.Resource
+import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsDetailItem
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemCategoryMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemDetailMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemMeals
@@ -16,7 +17,7 @@ class ItemMealsInteractor @Inject constructor(private val itemMealsRepository: I
     override fun getFilterByCategory(c: String): Flow<Resource<List<ItemMeals>>> =
         itemMealsRepository.getFilterByCategory(c)
 
-    override fun getDetailMeals(id: String): Flow<Resource<ItemDetailMeals>> =
+    override fun getDetailMeals(id: String): Flow<Resource<MealsDetailItem>> =
         itemMealsRepository.getDetailMeals(id)
 
     override fun getSearchByName(name: String): Flow<Resource<List<ItemMeals>>> =

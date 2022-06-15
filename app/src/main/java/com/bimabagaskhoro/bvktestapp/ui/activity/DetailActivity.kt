@@ -7,11 +7,14 @@ import android.view.View
 import androidx.activity.viewModels
 import com.bimabagaskhoro.bvktestapp.R
 import com.bimabagaskhoro.bvktestapp.data.Resource
+import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsDetailItem
 import com.bimabagaskhoro.bvktestapp.databinding.ActivityDetailBinding
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemCategoryMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemDetailMeals
+import com.bimabagaskhoro.bvktestapp.domain.model.ItemMeals
 import com.bimabagaskhoro.bvktestapp.ui.viewmodel.MealsViewModel
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,40 +30,50 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val getId = intent.getParcelableExtra<ItemDetailMeals>(EXTRA_DATA_ID)
-        //showDetailMeals(getId)
+        val id = intent.getParcelableExtra<ItemMeals>(EXTRA_DATA_ID)
+        showDetailMeals(id)
     }
 
-//    private fun showDetailMeals(id: ItemDetailMeals?) {
-//        id?.let {
-//            val idMeal = id.idMeal
-//            viewModel.getDetailMeals(idMeal).observe(this) {
-//                when (it) {
-//                    is Resource.Loading -> {
-//                        binding.progressbar.visibility = View.VISIBLE
-//                    }
-//                    is Resource.Success -> {
-//                        binding.apply {
-//                            Glide.with(this@DetailActivity)
-//                                .load(it.data?.idMeal)
-//                                .apply(RequestOptions().override(55, 55))
-//                                .into(imgMeals)
-//                            tvTittleMeals.text = it.data?.strMeal
-//                            tvDescMeals.text = it.data?.strCategory
-//                        }
-//                    }
-//                    else-> {
-//                        Log.d(TAG, "show detail meals error")
-//                    }
-//                }
-//            }
-//        }
-//    }
-
-    private fun initViewModel(id: Int) {
-
+    private fun showDetailMeals(id: ItemMeals?) {
+        id?.let {
+            val idMeal = id.idMeal
+            viewModel.getDetailMeals(idMeal).observe(this) {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.progressbar.visibility = View.VISIBLE
+                    }
+                    is Resource.Success -> {
+                        if (it.data == null){
+                            Log.d(TAG, "data null")
+                        } else {
+                            fetchDataMeals(it.data)
+                        }
+                    }
+                    else -> {
+                        Log.d(TAG, "show detail meals error")
+                    }
+                }
+            }
+        }
     }
 
+    private fun fetchDataMeals(data: MealsDetailItem) {
+        binding.apply {
+            tvTittleMeals.text = data.strMeal
+            tvDescMeals.text = data.strInstructions
+            Glide.with(this@DetailActivity)
+                .load(data.strMealThumb)
+                .transform(RoundedCorners(20))
+                .apply(
+                    RequestOptions.placeholderOf(R.drawable.ic_launcher_background)
+                )
+                .into(imgMeals)
+//            Glide.with(this@DetailActivity)
+//                .load(data.strMealThumb)
+//                .apply(RequestOptions().override(55, 55))
+//                .into(imgMeals)
+        }
+    }
 
     companion object {
         const val EXTRA_DATA_ID = "extra_data"

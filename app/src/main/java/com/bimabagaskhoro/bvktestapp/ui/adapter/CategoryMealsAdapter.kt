@@ -23,6 +23,7 @@ class CategoryMealsAdapter : RecyclerView.Adapter<CategoryMealsAdapter.ViewHolde
         notifyDataSetChanged()
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
             LayoutInflater.from(parent.context)

@@ -5,6 +5,7 @@ import android.util.Log
 import com.bimabagaskhoro.bvktestapp.data.Resource
 import com.bimabagaskhoro.bvktestapp.data.source.remote.RemoteDataSource
 import com.bimabagaskhoro.bvktestapp.data.source.remote.network.ApiResponse
+import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsDetailItem
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemCategoryMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemDetailMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemMeals
@@ -49,19 +50,19 @@ class ItemsRepository @Inject constructor(private val remoteDataSource: RemoteDa
         }
     }
 
-    override fun getDetailMeals(id: String): Flow<Resource<ItemDetailMeals>> {
+    override fun getDetailMeals(id: String): Flow<Resource<MealsDetailItem>> {
         return flow {
-//            when (val apiResponse = remoteDataSource.getDetailMeals(id).first()) {
-//                is ApiResponse.Success -> {
-//                    emit(Resource.Success(DataMapper.entityToDomainDetailItems(apiResponse.data!!)))
-//                }
-//                is ApiResponse.Error -> {
-//                    emit(Resource.Error(apiResponse.errorMessage!!))
-//                }
-//                is ApiResponse.Empty -> {
-//                    Log.d(TAG, "getDetailMeals: Empty Data")
-//                }
-//            }
+            when (val apiResponse = remoteDataSource.getDetailMeals(id).first()) {
+                is ApiResponse.Success -> {
+                    emit(Resource.Success(apiResponse.data!!))
+                }
+                is ApiResponse.Error -> {
+                    emit(Resource.Error(apiResponse.errorMessage!!))
+                }
+                is ApiResponse.Empty -> {
+                    Log.d(TAG, "getDetailMeals: Empty Data")
+                }
+            }
         }
     }
 
