@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter = CategoryMealsAdapter()
         adapter.onItemClick = { meals ->
-            Intent(this, DetailActivity::class.java).also {
+            Intent(this, MealsActivity::class.java).also {
                 it.putExtra(MealsActivity.EXTRA_DATA, meals)
                 startActivity(it)
             }

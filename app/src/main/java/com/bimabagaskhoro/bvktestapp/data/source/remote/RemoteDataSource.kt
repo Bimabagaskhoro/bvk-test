@@ -6,6 +6,7 @@ import com.bimabagaskhoro.bvktestapp.data.source.remote.network.ApiService
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.CategoriesItem
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsDetailItem
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsItem
+import com.bimabagaskhoro.bvktestapp.domain.model.ItemMeals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -51,16 +52,11 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getDetailMeals(id: Int): Flow<ApiResponse<List<MealsDetailItem>>> {
+    suspend fun getDetailMeals(id: String): Flow<ApiResponse<MealsDetailItem>> {
         return flow {
             try {
                 val response = apiService.getDetailMeals(id)
-                val data = response.detailMeals
-                if (data.isNotEmpty()){
-                    emit(ApiResponse.Success(data))
-                }else {
-                    emit(ApiResponse.Empty)
-                }
+                emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 emit(ApiResponse.Error(e.toString()))
                 Log.d(TAG, "getDetailMeals: ${e.message}")
@@ -68,11 +64,11 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun getSearchByName(name: String): Flow<ApiResponse<List<MealsDetailItem>>> {
+    suspend fun getSearchByName(name: String): Flow<ApiResponse<List<MealsItem>>> {
         return flow {
             try {
                 val response = apiService.getSearchByName(name)
-                val data = response.detailMeals
+                val data = response.meals
                 if (data.isNotEmpty()){
                     emit(ApiResponse.Success(data))
                 }else {

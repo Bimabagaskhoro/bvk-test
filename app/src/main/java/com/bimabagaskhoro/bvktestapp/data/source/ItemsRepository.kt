@@ -49,27 +49,27 @@ class ItemsRepository @Inject constructor(private val remoteDataSource: RemoteDa
         }
     }
 
-    override fun getDetailMeals(id: Int): Flow<Resource<List<ItemDetailMeals>>> {
+    override fun getDetailMeals(id: String): Flow<Resource<ItemDetailMeals>> {
         return flow {
-            when (val apiResponse = remoteDataSource.getDetailMeals(id).first()) {
-                is ApiResponse.Success -> {
-                    emit(Resource.Success(DataMapper.entitiesToDomainDetailItems(apiResponse.data!!)))
-                }
-                is ApiResponse.Error -> {
-                    emit(Resource.Error(apiResponse.errorMessage!!))
-                }
-                is ApiResponse.Empty -> {
-                    Log.d(TAG, "getDetailMeals: Empty Data")
-                }
-            }
+//            when (val apiResponse = remoteDataSource.getDetailMeals(id).first()) {
+//                is ApiResponse.Success -> {
+//                    emit(Resource.Success(DataMapper.entityToDomainDetailItems(apiResponse.data!!)))
+//                }
+//                is ApiResponse.Error -> {
+//                    emit(Resource.Error(apiResponse.errorMessage!!))
+//                }
+//                is ApiResponse.Empty -> {
+//                    Log.d(TAG, "getDetailMeals: Empty Data")
+//                }
+//            }
         }
     }
 
-    override fun getSearchByName(name: String): Flow<Resource<List<ItemDetailMeals>>> {
+    override fun getSearchByName(name: String): Flow<Resource<List<ItemMeals>>> {
         return flow {
             when (val apiResponse = remoteDataSource.getSearchByName(name).first()) {
                 is ApiResponse.Success -> {
-                    emit(Resource.Success(DataMapper.entitiesToDomainDetailItems(apiResponse.data!!)))
+                    emit(Resource.Success(DataMapper.entitiesToDomainMeals(apiResponse.data!!)))
                 }
                 is ApiResponse.Error -> {
                     emit(Resource.Error(apiResponse.errorMessage!!))

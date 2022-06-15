@@ -12,7 +12,7 @@ class MealsViewModel @Inject constructor(val useCases: ItemMealsUseCase) : ViewM
 
     fun getFilterByCategory(c: String) = useCases.getFilterByCategory(c).asLiveData()
 
-    fun getDetailMeals(id: Int) = useCases.getDetailMeals(id).asLiveData()
+    fun getDetailMeals(id: String) = useCases.getDetailMeals(id).asLiveData()
 
     fun getSearchByName(name: String) = useCases.getSearchByName(name).asLiveData()
 }

@@ -1,5 +1,6 @@
 package com.bimabagaskhoro.bvktestapp.data.source.remote.network
 
+import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsDetailItem
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.ResponseCategoryMeals
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.ResponseDetailMeals
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.ResponseMeals
@@ -18,11 +19,11 @@ interface ApiService {
 
     @GET("lookup.php")
     suspend fun getDetailMeals(
-        @Query("i") id: Int,
-    ): ResponseDetailMeals
+        @Query("i") id: String,
+    ): MealsDetailItem
 
     @GET("search.php")
     suspend fun getSearchByName(
         @Query("s") name: String,
-    ): ResponseDetailMeals
+    ): ResponseMeals
 }
