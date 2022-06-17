@@ -12,7 +12,7 @@ interface IItemMealsRepository {
 
     fun getFilterByCategory(c: String): Flow<Resource<List<ItemMeals>>>
 
-    fun getDetailMeals(id: String): Flow<Resource<MealsDetailItem>>
+    fun getDetailMeals(id: String): Flow<Resource<ItemDetailMeals>>
 
     fun getSearchByName(name: String): Flow<Resource<List<ItemMeals>>>
 }

@@ -4,7 +4,6 @@ import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsDetailItem
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.ResponseCategoryMeals
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.ResponseDetailMeals
 import com.bimabagaskhoro.bvktestapp.data.source.remote.response.ResponseMeals
-import com.bimabagaskhoro.bvktestapp.domain.model.ItemDetailMeals
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -21,7 +20,7 @@ interface ApiService {
     @GET("lookup.php")
     suspend fun getDetailMeals(
         @Query("i") id: String,
-    ): MealsDetailItem
+    ): ResponseDetailMeals
 
     @GET("search.php")
     suspend fun getSearchByName(

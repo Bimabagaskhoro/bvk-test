@@ -7,9 +7,7 @@ import android.view.View
 import androidx.activity.viewModels
 import com.bimabagaskhoro.bvktestapp.R
 import com.bimabagaskhoro.bvktestapp.data.Resource
-import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsDetailItem
 import com.bimabagaskhoro.bvktestapp.databinding.ActivityDetailBinding
-import com.bimabagaskhoro.bvktestapp.domain.model.ItemCategoryMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemDetailMeals
 import com.bimabagaskhoro.bvktestapp.domain.model.ItemMeals
 import com.bimabagaskhoro.bvktestapp.ui.viewmodel.MealsViewModel
@@ -37,17 +35,13 @@ class DetailActivity : AppCompatActivity() {
     private fun showDetailMeals(id: ItemMeals?) {
         id?.let {
             val idMeal = id.idMeal
-            viewModel.getDetailMeals(idMeal).observe(this) {
+            viewModel.getDetailMeals(idMeal.toString()).observe(this) {
                 when (it) {
                     is Resource.Loading -> {
                         binding.progressbar.visibility = View.VISIBLE
                     }
                     is Resource.Success -> {
-                        if (it.data == null){
-                            Log.d(TAG, "data null")
-                        } else {
-                            fetchDataMeals(it.data)
-                        }
+                        fetchDataMeals(it.data)
                     }
                     else -> {
                         Log.d(TAG, "show detail meals error")
@@ -57,21 +51,19 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun fetchDataMeals(data: MealsDetailItem) {
-        binding.apply {
-            tvTittleMeals.text = data.strMeal
-            tvDescMeals.text = data.strInstructions
-            Glide.with(this@DetailActivity)
-                .load(data.strMealThumb)
-                .transform(RoundedCorners(20))
-                .apply(
-                    RequestOptions.placeholderOf(R.drawable.ic_launcher_background)
-                )
-                .into(imgMeals)
-//            Glide.with(this@DetailActivity)
-//                .load(data.strMealThumb)
-//                .apply(RequestOptions().override(55, 55))
-//                .into(imgMeals)
+    private fun fetchDataMeals(data: ItemDetailMeals?) {
+        if (data != null){
+            binding.apply {
+                tvTittleMeals.text = data.strMeal
+                tvDescMeals.text = data.strInstructions
+                Glide.with(this@DetailActivity)
+                    .load(data.strMealThumb)
+                    .transform(RoundedCorners(20))
+                    .apply(
+                        RequestOptions.placeholderOf(R.drawable.ic_launcher_background)
+                    )
+                    .into(imgMeals)
+            }
         }
     }
 

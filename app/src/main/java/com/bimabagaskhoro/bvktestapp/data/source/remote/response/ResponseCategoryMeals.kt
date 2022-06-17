@@ -8,21 +8,21 @@ import kotlinx.android.parcel.Parcelize
 data class ResponseCategoryMeals(
 
 	@field:SerializedName("categories")
-	val categories: List<CategoriesItem>
+	val categories: List<CategoriesItem?>? = null
 ) : Parcelable
 
 @Parcelize
 data class CategoriesItem(
 
 	@field:SerializedName("strCategory")
-	val strCategory: String,
+	val strCategory: String? = null,
 
 	@field:SerializedName("strCategoryDescription")
-	val strCategoryDescription: String,
+	val strCategoryDescription: String? = null,
 
 	@field:SerializedName("idCategory")
-	val idCategory: String,
+	val idCategory: String? = null,
 
 	@field:SerializedName("strCategoryThumb")
-	val strCategoryThumb: String
+	val strCategoryThumb: String? = null
 ) : Parcelable

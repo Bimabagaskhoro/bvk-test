@@ -47,7 +47,7 @@ class MealsActivity : AppCompatActivity() {
     private fun showDetailCategory(nameCategory: ItemCategoryMeals?) {
         nameCategory?.let {
             val name = nameCategory.strCategory
-            viewModel.getFilterByCategory(name).observe(this) {
+            viewModel.getFilterByCategory(name.toString()).observe(this) {
                 when (it) {
                     is Resource.Loading -> {
                         binding.progressbar.visibility = View.VISIBLE

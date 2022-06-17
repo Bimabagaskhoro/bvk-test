@@ -17,7 +17,7 @@ class ItemMealsInteractor @Inject constructor(private val itemMealsRepository: I
     override fun getFilterByCategory(c: String): Flow<Resource<List<ItemMeals>>> =
         itemMealsRepository.getFilterByCategory(c)
 
-    override fun getDetailMeals(id: String): Flow<Resource<MealsDetailItem>> =
+    override fun getDetailMeals(id: String): Flow<Resource<ItemDetailMeals>> =
         itemMealsRepository.getDetailMeals(id)
 
     override fun getSearchByName(name: String): Flow<Resource<List<ItemMeals>>> =

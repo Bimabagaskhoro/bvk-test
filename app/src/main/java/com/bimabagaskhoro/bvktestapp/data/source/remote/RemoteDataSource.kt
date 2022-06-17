@@ -3,11 +3,7 @@ package com.bimabagaskhoro.bvktestapp.data.source.remote
 import android.util.Log
 import com.bimabagaskhoro.bvktestapp.data.source.remote.network.ApiResponse
 import com.bimabagaskhoro.bvktestapp.data.source.remote.network.ApiService
-import com.bimabagaskhoro.bvktestapp.data.source.remote.response.CategoriesItem
-import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsDetailItem
-import com.bimabagaskhoro.bvktestapp.data.source.remote.response.MealsItem
-import com.bimabagaskhoro.bvktestapp.domain.model.ItemDetailMeals
-import com.bimabagaskhoro.bvktestapp.domain.model.ItemMeals
+import com.bimabagaskhoro.bvktestapp.data.source.remote.response.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,68 +13,58 @@ import javax.inject.Singleton
 
 @Singleton
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
-    private val TAG = RemoteDataSource::class.java.simpleName
 
-    suspend fun getMealsCategory(): Flow<ApiResponse<List<CategoriesItem>>> {
-        return flow {
-            try {
-                val response = apiService.getMealsCategory()
-                val data = response.categories
-                if (data.isNotEmpty()) {
-                    emit(ApiResponse.Success(data))
+    suspend fun getMealsCategory() = flow {
+        try {
+            val response = apiService.getMealsCategory().categories
+            if (response != null) {
+                if (response.isNotEmpty()) {
+                    emit(StatusResponseOnline.Success(response))
                 } else {
-                    emit(ApiResponse.Empty)
+                    emit(StatusResponseOnline.Error("Data kosong"))
                 }
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.d(TAG, "getMealsCategory: ${e.message}")
             }
-        }.flowOn(Dispatchers.IO)
-    }
 
-    suspend fun getFilterByCategory(category: String): Flow<ApiResponse<List<MealsItem>>> {
-        return flow {
-            try {
-                val response = apiService.getFilterByCategory(category)
-                val data = response.meals
-                if (data.isNotEmpty()) {
-                    emit(ApiResponse.Success(data))
-                } else {
-                    emit(ApiResponse.Empty)
-                }
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.d(TAG, "getFilterByCategory: ${e.message}")
-            }
-        }.flowOn(Dispatchers.IO)
-    }
+        } catch (e: Exception) {
+            emit(StatusResponseOnline.Error(e.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
 
-    suspend fun getDetailMeals(id: String): Flow<ApiResponse<MealsDetailItem>> {
-        return flow {
-            try {
-                val response = apiService.getDetailMeals(id)
-                emit(ApiResponse.Success(response))
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.d(TAG, "getDetailMeals: ${e.message}")
+    suspend fun getFilterByCategory(category: String) = flow {
+        try {
+            val response = apiService.getFilterByCategory(category).meals
+            if (response!!.isNotEmpty()) {
+                emit(StatusResponseOnline.Success(response))
+            } else {
+                emit(StatusResponseOnline.Error("Data kosong"))
             }
-        }.flowOn(Dispatchers.IO)
-    }
 
-    suspend fun getSearchByName(name: String): Flow<ApiResponse<List<MealsItem>>> {
-        return flow {
-            try {
-                val response = apiService.getSearchByName(name)
-                val data = response.meals
-                if (data.isNotEmpty()){
-                    emit(ApiResponse.Success(data))
-                }else {
-                    emit(ApiResponse.Empty)
-                }
-            } catch (e: Exception) {
-                emit(ApiResponse.Error(e.toString()))
-                Log.d(TAG, "getSearchByName: ${e.message}")
+        } catch (e: Exception) {
+            emit(StatusResponseOnline.Error(e.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    suspend fun getDetailMeals(id: String) = flow {
+        try {
+            val response = apiService.getDetailMeals(id).detailMeals
+            emit(StatusResponseOnline.Success(response))
+        } catch (e: Exception) {
+            emit(StatusResponseOnline.Error(e.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    suspend fun getSearchByName(name: String) = flow {
+        try {
+            val response = apiService.getSearchByName(name).meals
+            if (response!!.isNotEmpty()) {
+                emit(StatusResponseOnline.Success(response))
+            } else {
+                emit(StatusResponseOnline.Error("Data kosong"))
             }
-        }.flowOn(Dispatchers.IO)
-    }
+
+        } catch (e: Exception) {
+            emit(StatusResponseOnline.Error(e.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
 }

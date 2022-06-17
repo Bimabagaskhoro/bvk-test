@@ -7,11 +7,11 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ItemMeals(
     @field:SerializedName("strMealThumb")
-    val strMealThumb: String,
+    val strMealThumb: String? = null,
 
     @field:SerializedName("idMeal")
-    val idMeal: String,
+    val idMeal: String? = null,
 
     @field:SerializedName("strMeal")
-    val strMeal: String
+    val strMeal: String? = null
 ) : Parcelable
